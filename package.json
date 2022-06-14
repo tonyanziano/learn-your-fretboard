@@ -1,0 +1,34 @@
+{
+  "name": "learn-your-fretboard",
+  "version": "1.0.0",
+  "description": "A tool built to help learn your guitar's fretboard.",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --config webpack.config.prod.js",
+    "build-dev": "webpack --config webpack.config.dev.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tonyanziano/learn-your-fretboard.git"
+  },
+  "author": "Tony Anziano",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tonyanziano/learn-your-fretboard/issues"
+  },
+  "homepage": "https://github.com/tonyanziano/learn-your-fretboard#readme",
+  "dependencies": {
+    "react": "^18.1.0",
+    "typescript": "^4.7.3",
+    "webpack-cli": "^4.10.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.12",
+    "@types/react-dom": "^18.0.5",
+    "html-webpack-plugin": "^5.5.0",
+    "react-dom": "^18.1.0",
+    "ts-loader": "^9.3.0",
+    "webpack": "^5.73.0"
+  }
+}
