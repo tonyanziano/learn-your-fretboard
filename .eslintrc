@@ -1,0 +1,12 @@
+{
+  "env": {
+    "browser": true,
+    "commonjs": true
+  },
+  "extends": ["prettier", "eslint-config-problems"],
+  "plugins": ["prettier"],
+  "rules": {
+    "prettier/prettier": ["error"]
+  },
+  "ignorePatterns": ["*.json"]
+}

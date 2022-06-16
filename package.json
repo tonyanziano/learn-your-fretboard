@@ -2,10 +2,10 @@
   "name": "learn-your-fretboard",
   "version": "1.0.0",
   "description": "A tool built to help learn your guitar's fretboard.",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "webpack --config webpack.config.prod.js",
-    "build-dev": "webpack --config webpack.config.dev.js",
+    "build-dev": "webpack serve --config webpack.config.dev.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -26,9 +26,15 @@
   "devDependencies": {
     "@types/react": "^18.0.12",
     "@types/react-dom": "^18.0.5",
+    "eslint": "^8.17.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-problems": "6.0.0",
+    "eslint-plugin-prettier": "^4.0.0",
     "html-webpack-plugin": "^5.5.0",
+    "prettier": "2.7.0",
     "react-dom": "^18.1.0",
     "ts-loader": "^9.3.0",
-    "webpack": "^5.73.0"
+    "webpack": "^5.73.0",
+    "webpack-dev-server": "^4.9.2"
   }
 }
