@@ -1,5 +1,8 @@
 import React from 'react';
+import { CurrentNote } from './components/CurrentNote';
 
 export const App: React.FC<{}> = () => {
-  return <div>Hello</div>;
+  return <>
+  <CurrentNote />
+  </>
 };
