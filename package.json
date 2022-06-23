@@ -19,7 +19,10 @@
   },
   "homepage": "https://github.com/tonyanziano/learn-your-fretboard#readme",
   "dependencies": {
+    "@emotion/react": "^11.9.3",
+    "@reduxjs/toolkit": "^1.8.2",
     "react": "^18.1.0",
+    "react-redux": "^8.0.2",
     "typescript": "^4.7.3",
     "webpack-cli": "^4.10.0"
   },

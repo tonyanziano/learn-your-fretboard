@@ -6,7 +6,8 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "jsx": "react"
+    "jsx": "react-jsx",
+    "jsxImportSource": "@emotion/react"
   },
   "$schema": "https://json.schemastore.org/tsconfig"
 }
