@@ -17,17 +17,19 @@ module.exports = {
     path: path.resolve(__dirname, './dist'),
     filename: 'index-bundle.js',
   },
-  plugins: [new HtmlWebpackPlugin({
-    template: path.resolve(__dirname, 'src/index.html')
-  })],
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, 'src/index.html'),
+    }),
+  ],
   resolve: {
     // Add `.ts` and `.tsx` as a resolvable extension.
-    extensions: [".ts", ".tsx", ".js"]
+    extensions: ['.ts', '.tsx', '.js'],
   },
   module: {
     rules: [
       // all files with a `.ts` or `.tsx` extension will be handled by `ts-loader`
-      { test: /\.tsx?$/, loader: "ts-loader" }
-    ]
-  }
+      { test: /\.tsx?$/, loader: 'ts-loader' },
+    ],
+  },
 };

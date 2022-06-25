@@ -1,21 +1,21 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type BPMState = {
-  bpm: number
-}
+  bpm: number;
+};
 
 const initialState: BPMState = {
   bpm: 40,
-}
+};
 
 export const bpmSlice = createSlice({
   name: 'bpm',
   initialState,
   reducers: {
     setBPM: (state, action: PayloadAction<number>) => {
-      state.bpm = action.payload
+      state.bpm = action.payload;
     },
   },
-})
+});
 
-export const { setBPM } = bpmSlice.actions
+export const { setBPM } = bpmSlice.actions;
