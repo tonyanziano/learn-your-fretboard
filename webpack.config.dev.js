@@ -1,5 +1,3 @@
-'use strict';
-
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
@@ -8,7 +6,8 @@ module.exports = {
   entry: path.resolve(__dirname, 'src/index.tsx'),
   devServer: {
     static: {
-      directory: path.join(__dirname, 'public'),
+      directory: path.join(__dirname, 'src/public'),
+      publicPath: '/',
     },
     compress: true,
     port: 9000,
