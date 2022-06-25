@@ -14,7 +14,7 @@ export const CurrentNote: React.FC<{}> = () => {
   useEffect(() => {
     setInterval(
       () =>
-        setCurrentNote((note) => {
+        setCurrentNote(note => {
           if (note === NaturalNotes.length - 1) {
             // reset
             return 0;

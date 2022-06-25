@@ -1,12 +1,12 @@
 import React from 'react';
-import { BPMSlider } from './components/BPMSlider';
 import { CurrentNote } from './components/CurrentNote';
+import { Settings } from './components/settings/Settings';
 
 export const App: React.FC<{}> = () => {
   return (
     <>
+      <Settings />
       <CurrentNote />
-      <BPMSlider />
     </>
   );
 };
