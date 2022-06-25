@@ -31,6 +31,7 @@ export const useCurrentNote = () => {
 
     // play the metronome click
     if (metronomeClick?.HAVE_ENOUGH_DATA) {
+      // TODO: hook up to audio settings to change volume / mute
       metronomeClick.play();
     }
   }, [metronomeClick, setCurrentNote]);
