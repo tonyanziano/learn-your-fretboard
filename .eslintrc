@@ -3,10 +3,21 @@
     "browser": true,
     "commonjs": true
   },
-  "extends": ["prettier", "eslint-config-problems"],
-  "plugins": ["prettier"],
+  "extends": [
+    "prettier",
+    "eslint-config-problems",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["prettier", "react", "@typescript-eslint"],
   "rules": {
-    "prettier/prettier": ["error"]
+    "prettier/prettier": ["error"],
+    "@typescript-eslint/no-extra-parens": ["error"],
+    // TODO: figure out why this rule doesn't work
+    "react/jsx-curly-brace-presence": [
+      "error",
+      { "props": "always", "children": "never" }
+    ]
   },
   "ignorePatterns": ["*.json"]
 }
