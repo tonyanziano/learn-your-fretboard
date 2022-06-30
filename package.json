@@ -4,9 +4,12 @@
   "description": "A tool built to help learn your guitar's fretboard.",
   "main": "dist/index.js",
   "scripts": {
-    "build": "webpack --config webpack.config.prod.js",
+    "build": "npm run clean && webpack --config webpack.config.prod.js",
     "build-dev": "webpack serve --config webpack.config.dev.js",
+    "clean": "rimraf dist",
+    "copy-assets": "ncp dist docs",
     "lint": "eslint --fix && prettier --write .",
+    "publish": "npm run build && rimraf docs/* && npm run copy-assets",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -39,8 +42,10 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.30.1",
     "html-webpack-plugin": "^5.5.0",
+    "ncp": "^2.0.0",
     "prettier": "2.7.0",
     "react-dom": "^18.1.0",
+    "rimraf": "^3.0.2",
     "ts-loader": "^9.3.0",
     "webpack": "^5.73.0",
     "webpack-dev-server": "^4.9.2"
