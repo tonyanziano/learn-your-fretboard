@@ -4,7 +4,7 @@
   "description": "A tool built to help learn your guitar's fretboard.",
   "main": "dist/index.js",
   "scripts": {
-    "build": "npm run clean && webpack --config webpack.config.prod.js",
+    "build": "npm run clean && webpack --config webpack.config.prod.js && ncp src/public/media dist/media",
     "dev": "webpack serve --config webpack.config.dev.js",
     "clean": "rimraf dist",
     "copy-assets": "ncp dist docs",
