@@ -45,8 +45,6 @@ export const useCurrentNote = () => {
     if (currentInterval.current) {
       clearInterval(currentInterval.current);
     }
-    // TODO: might need to look into the metronome volume settings delaying the next
-    // iteration of the interval -- it makes the next tick of the note take a full tick
     currentInterval.current = setInterval(getAndPlayNote, bpmInMs);
   }, [bpmInMs, currentInterval.current, getAndPlayNote]);
 
