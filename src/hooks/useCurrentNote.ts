@@ -2,23 +2,22 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { AccidentalNotes, NaturalNotes } from '../constants';
 import { selectBPM } from '../state/selectors/bpm';
+import {
+  selectMetronomeIsMuted,
+  selectMetronomeVolume,
+} from '../state/selectors/metronome';
 
 const rangeOfNaturalNotes = NaturalNotes.length - 1;
 const rangeOfAccidentalNotes = AccidentalNotes.length - 1;
 
-let metronomeClick: HTMLAudioElement | undefined;
-
 /** Returns the current note and plays metronome audio */
 export const useCurrentNote = () => {
-  // grab settings from Redux (audio settings, mode settings, what notes, etc.)
+  const metronomeClick = useRef(new Audio('./media/metronome-click.wav'));
   const bpm = useSelector(selectBPM);
+  const metronomeVolume = useSelector(selectMetronomeVolume);
+  const metronomeIsMuted = useSelector(selectMetronomeIsMuted);
   const currentInterval = useRef<NodeJS.Timer | undefined>();
   const [currentNote, setCurrentNote] = useState('');
-
-  // setup audio
-  if (!metronomeClick) {
-    metronomeClick = new Audio('./media/metronome-click.wav');
-  }
 
   const bpmInMs = useMemo(() => {
     return (60 / bpm) * 1000;
@@ -30,11 +29,16 @@ export const useCurrentNote = () => {
     setCurrentNote(NaturalNotes[noteIndex]);
 
     // play the metronome click
-    if (metronomeClick?.HAVE_ENOUGH_DATA) {
-      // TODO: hook up to audio settings to change volume / mute
-      metronomeClick.play();
+    if (metronomeClick.current.HAVE_ENOUGH_DATA) {
+      metronomeClick.current.play();
     }
   }, [metronomeClick, setCurrentNote]);
+
+  // adjust the audio of the metronome click according to the settings
+  useEffect(() => {
+    metronomeClick.current.muted = metronomeIsMuted;
+    metronomeClick.current.volume = metronomeVolume;
+  }, [metronomeIsMuted, metronomeVolume]);
 
   // change the current note and play noise depending on settings
   useEffect(() => {

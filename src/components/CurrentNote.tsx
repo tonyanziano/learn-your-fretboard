@@ -1,15 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { NaturalNotes } from '../constants';
+import React from 'react';
 import { useCurrentNote } from '../hooks/useCurrentNote';
+/** @jsx jsx **/
+import { css } from '@emotion/react';
 
-const bpm = 40;
-const bpmInMs = (60 / bpm) * 1000;
+const styles = css({
+  padding: '8px 0',
+  textAlign: 'center',
+  fontSize: 72,
+});
 
 /**
  * Displays the current note that should be played by the user
  */
-export const CurrentNote: React.FC<{}> = () => {
+export const CurrentNote: React.FC = () => {
   const currentNote = useCurrentNote();
 
-  return <div>{currentNote}</div>;
+  return <div css={styles}>{currentNote}</div>;
 };

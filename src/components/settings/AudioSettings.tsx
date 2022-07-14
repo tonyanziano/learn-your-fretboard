@@ -1,21 +1,38 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  selectMetronomeIsMuted,
+  selectMetronomeVolume,
+} from '../../state/selectors/metronome';
+import {
+  setMetronomeVolume,
+  toggleMetronomeMute,
+} from '../../state/slices/metronome';
 
 const muteToggleId = 'audio-settings-mute-toggle';
 const volumeSliderId = 'audio-settings-volume-slider';
 
-export const AudioSettings: React.FC<{}> = () => {
-  const [isMuted, setIsMuted] = useState(false);
-  const [volume, setVolume] = useState(50);
+export const AudioSettings: React.FC = () => {
+  const metronomeIsMuted = useSelector(selectMetronomeIsMuted);
+  const metronomeVolume = useSelector(selectMetronomeVolume);
+  const dispatch = useDispatch();
 
   const onToggleMute = useCallback(() => {
-    setIsMuted(muted => !muted);
+    dispatch(toggleMetronomeMute());
   }, []);
 
   const onChangeVolume = useCallback<
     React.ChangeEventHandler<HTMLInputElement>
   >(ev => {
-    setVolume(parseInt(ev.target.value));
+    // scale metronome volume from [0 - 100] to [0 - 1]
+    dispatch(setMetronomeVolume(parseInt(ev.target.value) / 100));
   }, []);
+
+  // scale metronome volume from [0 - 1] to [0 - 100]
+  const metronomeVolumeScaledUp = useMemo(
+    () => metronomeVolume * 100,
+    [metronomeVolume]
+  );
 
   return (
     <>
@@ -23,7 +40,7 @@ export const AudioSettings: React.FC<{}> = () => {
         Mute metronome
         <input
           id={muteToggleId}
-          checked={isMuted}
+          checked={metronomeIsMuted}
           onChange={onToggleMute}
           type={'checkbox'}
         />
@@ -32,11 +49,11 @@ export const AudioSettings: React.FC<{}> = () => {
         Metronome volume
         <input
           id={volumeSliderId}
-          type="range"
+          type={'range'}
           min={0}
           max={100}
           onChange={onChangeVolume}
-          value={volume}
+          value={metronomeVolumeScaledUp}
         />
       </label>
     </>
