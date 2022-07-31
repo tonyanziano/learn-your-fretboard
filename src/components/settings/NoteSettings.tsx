@@ -31,8 +31,8 @@ export const NoteSettings: React.FC = () => {
       <label htmlFor={naturalToggleId}>
         Natural notes
         <input
-          id={naturalToggleId}
           checked={naturalNotesEnabled}
+          id={naturalToggleId}
           onChange={onToggleNaturalNotesEnabled}
           type={'checkbox'}
         />
@@ -40,8 +40,8 @@ export const NoteSettings: React.FC = () => {
       <label htmlFor={accidentalToggleId}>
         Accidental notes
         <input
-          id={accidentalToggleId}
           checked={accidentalNotesEnabled}
+          id={accidentalToggleId}
           onChange={onToggleAccidentalNotesEnabled}
           type={'checkbox'}
         />

@@ -12,11 +12,12 @@
   "plugins": ["prettier", "react", "@typescript-eslint"],
   "rules": {
     "prettier/prettier": ["error", { "endOfLine": "auto" }],
-    "@typescript-eslint/no-extra-parens": ["error"],
+    "no-extra-parens": "off",
     "react/jsx-curly-brace-presence": [
       "error",
       { "props": "always", "children": "never" }
-    ]
+    ],
+    "react/jsx-sort-props": ["error"]
   },
   "ignorePatterns": ["*.json"]
 }
