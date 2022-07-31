@@ -3,6 +3,7 @@ import { BPMSlider } from './BPMSlider';
 import { AudioSettings } from './AudioSettings';
 /** @jsx jsx **/
 import { css } from '@emotion/react';
+import { NoteSettings } from './NoteSettings';
 
 const styles = css({
   display: 'flex',
@@ -15,6 +16,7 @@ export const Settings: React.FC = () => {
   return (
     <section css={styles}>
       <h2>Settings</h2>
+      <NoteSettings />
       <AudioSettings />
       <BPMSlider />
     </section>

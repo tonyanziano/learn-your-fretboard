@@ -6,9 +6,10 @@ import {
   selectMetronomeIsMuted,
   selectMetronomeVolume,
 } from '../state/selectors/metronome';
-
-const rangeOfNaturalNotes = NaturalNotes.length - 1;
-const rangeOfAccidentalNotes = AccidentalNotes.length - 1;
+import {
+  selectAccidentalNotesEnabled,
+  selectNaturalNotesEnabled,
+} from '../state/selectors/settings';
 
 /** Returns the current note and plays metronome audio */
 export const useCurrentNote = () => {
@@ -16,23 +17,37 @@ export const useCurrentNote = () => {
   const bpm = useSelector(selectBPM);
   const metronomeVolume = useSelector(selectMetronomeVolume);
   const metronomeIsMuted = useSelector(selectMetronomeIsMuted);
+  const naturalNotesEnabled = useSelector(selectNaturalNotesEnabled);
+  const accidentalNotesEnabled = useSelector(selectAccidentalNotesEnabled);
   const currentInterval = useRef<NodeJS.Timer | undefined>();
   const [currentNote, setCurrentNote] = useState('');
+
+  const availableNotes = useMemo(() => {
+    let notes: string[] = [];
+
+    if (naturalNotesEnabled) {
+      notes = [...NaturalNotes];
+    }
+    if (accidentalNotesEnabled) {
+      notes = [...notes, ...AccidentalNotes];
+    }
+
+    return notes;
+  }, [naturalNotesEnabled, accidentalNotesEnabled]);
 
   const bpmInMs = useMemo(() => {
     return (60 / bpm) * 1000;
   }, [bpm]);
 
   const getAndPlayNote = useCallback(() => {
-    // for now we will just return the natural notes
-    const noteIndex = Math.round(Math.random() * rangeOfNaturalNotes);
-    setCurrentNote(NaturalNotes[noteIndex]);
+    const noteIndex = Math.round(Math.random() * (availableNotes.length - 1));
+    setCurrentNote(availableNotes[noteIndex]);
 
     // play the metronome click
     if (metronomeClick.current.HAVE_ENOUGH_DATA) {
       metronomeClick.current.play();
     }
-  }, [metronomeClick, setCurrentNote]);
+  }, [metronomeClick, setCurrentNote, availableNotes]);
 
   // adjust the audio of the metronome click according to the settings
   useEffect(() => {
