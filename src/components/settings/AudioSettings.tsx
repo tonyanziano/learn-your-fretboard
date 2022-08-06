@@ -39,8 +39,8 @@ export const AudioSettings: React.FC = () => {
       <label htmlFor={muteToggleId}>
         Mute metronome
         <input
-          id={muteToggleId}
           checked={metronomeIsMuted}
+          id={muteToggleId}
           onChange={onToggleMute}
           type={'checkbox'}
         />
@@ -49,10 +49,10 @@ export const AudioSettings: React.FC = () => {
         Metronome volume
         <input
           id={volumeSliderId}
-          type={'range'}
-          min={0}
           max={100}
+          min={0}
           onChange={onChangeVolume}
+          type={'range'}
           value={metronomeVolumeScaledUp}
         />
       </label>

@@ -22,10 +22,10 @@ export const BPMSlider: React.FC = () => {
       BPM:
       <input
         id={bpmSliderId}
-        type="range"
-        min={MinBPM}
         max={MaxBPM}
+        min={MinBPM}
         onChange={onChangeBPM}
+        type={'range'}
         value={currentBPM}
       />
     </label>
