@@ -1,9 +1,13 @@
 import React from 'react';
 import { useCurrentNote } from '../hooks/useCurrentNote';
-/** @jsx jsx **/
+/** @jsxFrag jsx **/
 import { css } from '@emotion/react';
 
-const styles = css({
+const currentNoteHeaderStyle = css({
+  textAlign: 'center',
+});
+
+const currentNoteStyle = css({
   padding: '8px 0',
   textAlign: 'center',
   fontSize: 72,
@@ -15,5 +19,10 @@ const styles = css({
 export const CurrentNote: React.FC = () => {
   const currentNote = useCurrentNote();
 
-  return <div css={styles}>{currentNote}</div>;
+  return (
+    <>
+      <h1 css={currentNoteHeaderStyle}>Play note:</h1>
+      <div css={currentNoteStyle}>{currentNote}</div>
+    </>
+  );
 };

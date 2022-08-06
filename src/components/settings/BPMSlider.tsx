@@ -1,8 +1,16 @@
+/** @jsxFrag jsx **/
+import { css } from '@emotion/react';
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { MaxBPM, MinBPM } from '../../constants';
 import { selectBPM } from '../../state/selectors/bpm';
 import { setBPM } from '../../state/slices/bpm';
+
+const bpmSliderStyle = css({
+  margin: '8px 0',
+  maxWidth: 200,
+  cursor: 'pointer',
+});
 
 const bpmSliderId = 'bpm-slider-input';
 
@@ -18,9 +26,10 @@ export const BPMSlider: React.FC = () => {
   );
 
   return (
-    <label htmlFor={bpmSliderId}>
-      BPM:
+    <>
+      <label htmlFor={bpmSliderId}>BPM:</label>
       <input
+        css={bpmSliderStyle}
         id={bpmSliderId}
         max={MaxBPM}
         min={MinBPM}
@@ -28,6 +37,6 @@ export const BPMSlider: React.FC = () => {
         type={'range'}
         value={currentBPM}
       />
-    </label>
+    </>
   );
 };
