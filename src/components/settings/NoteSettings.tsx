@@ -1,51 +1,62 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  selectAccidentalNotesEnabled,
-  selectNaturalNotesEnabled,
-} from '../../state/selectors/settings';
-import {
-  toggleAccidentalNotes,
-  toggleNaturalNotes,
-} from '../../state/slices/settings';
+import { selectIncludedNotes } from '../../state/selectors/settings';
+import { IncludedNotes, setIncludedNotes } from '../../state/slices/settings';
 
-const naturalToggleId = 'audio-settings-mute-toggle';
-const accidentalToggleId = 'audio-settings-volume-slider';
+const allRadioId = 'note-settings-all-radio';
+const naturalRadioId = 'note-settings-natural-radio';
+const accidentalRadioId = 'note-settings-accidental-radio';
+
+type RadioOption = {
+  text: string;
+  includedNotes: IncludedNotes;
+  id: string;
+};
+
+const radioOptions: RadioOption[] = [
+  {
+    text: 'All notes',
+    id: allRadioId,
+    includedNotes: IncludedNotes.All,
+  },
+  {
+    text: 'Natural notes',
+    id: naturalRadioId,
+    includedNotes: IncludedNotes.Natural,
+  },
+  {
+    text: 'Accidental notes',
+    id: accidentalRadioId,
+    includedNotes: IncludedNotes.Accidental,
+  },
+];
 
 export const NoteSettings: React.FC = () => {
-  const naturalNotesEnabled = useSelector(selectNaturalNotesEnabled);
-  const accidentalNotesEnabled = useSelector(selectAccidentalNotesEnabled);
+  const includedNotes = useSelector(selectIncludedNotes);
   const dispatch = useDispatch();
 
-  const onToggleNaturalNotesEnabled = useCallback(() => {
-    dispatch(toggleNaturalNotes());
-  }, []);
-
-  const onToggleAccidentalNotesEnabled = useCallback(() => {
-    dispatch(toggleAccidentalNotes());
+  const onChangeRadioOption = useCallback((selection: IncludedNotes) => {
+    dispatch(setIncludedNotes(selection));
   }, []);
 
   return (
-    <>
-      {/* TODO: change these to a radio group because you shouldn't be able to have 0 available notes */}
-      <label htmlFor={naturalToggleId}>
-        Natural notes
-        <input
-          checked={naturalNotesEnabled}
-          id={naturalToggleId}
-          onChange={onToggleNaturalNotesEnabled}
-          type={'checkbox'}
-        />
-      </label>
-      <label htmlFor={accidentalToggleId}>
-        Accidental notes
-        <input
-          checked={accidentalNotesEnabled}
-          id={accidentalToggleId}
-          onChange={onToggleAccidentalNotesEnabled}
-          type={'checkbox'}
-        />
-      </label>
-    </>
+    <fieldset>
+      <legend>Included notes</legend>
+      {radioOptions.map(option => {
+        const onChange = () => onChangeRadioOption(option.includedNotes);
+
+        return (
+          <span>
+            <label htmlFor={option.id}>{option.text}</label>
+            <input
+              checked={includedNotes === option.includedNotes}
+              id={option.id}
+              onChange={onChange}
+              type={'radio'}
+            />
+          </span>
+        );
+      })}
+    </fieldset>
   );
 };

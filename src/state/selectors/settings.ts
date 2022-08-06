@@ -3,12 +3,7 @@ import { RootState } from '../store';
 
 const selectSettingsState = (state: RootState) => state.settings;
 
-export const selectAccidentalNotesEnabled = createSelector(
+export const selectIncludedNotes = createSelector(
   selectSettingsState,
-  state => state.accidentalNotes
-);
-
-export const selectNaturalNotesEnabled = createSelector(
-  selectSettingsState,
-  state => state.naturalNotes
+  state => state.includedNotes
 );

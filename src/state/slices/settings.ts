@@ -1,27 +1,27 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+export enum IncludedNotes {
+  All,
+  Natural,
+  Accidental,
+}
 
 type SettingsState = {
-  naturalNotes: boolean;
-  accidentalNotes: boolean;
+  includedNotes: IncludedNotes;
 };
 
 const initialState: SettingsState = {
-  naturalNotes: true,
-  accidentalNotes: false,
+  includedNotes: IncludedNotes.Natural,
 };
 
 export const settingsSlice = createSlice({
   name: 'settings',
   initialState,
   reducers: {
-    toggleNaturalNotes: state => {
-      state.naturalNotes = !state.naturalNotes;
-    },
-    toggleAccidentalNotes: state => {
-      state.accidentalNotes = !state.accidentalNotes;
+    setIncludedNotes: (state, action: PayloadAction<IncludedNotes>) => {
+      state.includedNotes = action.payload;
     },
   },
 });
 
-export const { toggleNaturalNotes, toggleAccidentalNotes } =
-  settingsSlice.actions;
+export const { setIncludedNotes } = settingsSlice.actions;

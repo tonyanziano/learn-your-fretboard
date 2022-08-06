@@ -36,26 +36,22 @@ export const AudioSettings: React.FC = () => {
 
   return (
     <>
-      <label htmlFor={muteToggleId}>
-        Mute metronome
-        <input
-          checked={metronomeIsMuted}
-          id={muteToggleId}
-          onChange={onToggleMute}
-          type={'checkbox'}
-        />
-      </label>
-      <label htmlFor={volumeSliderId}>
-        Metronome volume
-        <input
-          id={volumeSliderId}
-          max={100}
-          min={0}
-          onChange={onChangeVolume}
-          type={'range'}
-          value={metronomeVolumeScaledUp}
-        />
-      </label>
+      <label htmlFor={muteToggleId}>Mute metronome</label>
+      <input
+        checked={metronomeIsMuted}
+        id={muteToggleId}
+        onChange={onToggleMute}
+        type={'checkbox'}
+      />
+      <label htmlFor={volumeSliderId}>Metronome volume</label>
+      <input
+        id={volumeSliderId}
+        max={100}
+        min={0}
+        onChange={onChangeVolume}
+        type={'range'}
+        value={metronomeVolumeScaledUp}
+      />
     </>
   );
 };

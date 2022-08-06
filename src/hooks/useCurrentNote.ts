@@ -6,10 +6,8 @@ import {
   selectMetronomeIsMuted,
   selectMetronomeVolume,
 } from '../state/selectors/metronome';
-import {
-  selectAccidentalNotesEnabled,
-  selectNaturalNotesEnabled,
-} from '../state/selectors/settings';
+import { selectIncludedNotes } from '../state/selectors/settings';
+import { IncludedNotes } from '../state/slices/settings';
 
 /** Returns the current note and plays metronome audio */
 export const useCurrentNote = () => {
@@ -17,23 +15,20 @@ export const useCurrentNote = () => {
   const bpm = useSelector(selectBPM);
   const metronomeVolume = useSelector(selectMetronomeVolume);
   const metronomeIsMuted = useSelector(selectMetronomeIsMuted);
-  const naturalNotesEnabled = useSelector(selectNaturalNotesEnabled);
-  const accidentalNotesEnabled = useSelector(selectAccidentalNotesEnabled);
+  const includedNotes = useSelector(selectIncludedNotes);
   const currentInterval = useRef<NodeJS.Timer | undefined>();
   const [currentNote, setCurrentNote] = useState('');
 
   const availableNotes = useMemo(() => {
-    let notes: string[] = [];
-
-    if (naturalNotesEnabled) {
-      notes = [...NaturalNotes];
+    switch (includedNotes) {
+      case IncludedNotes.Natural:
+        return NaturalNotes;
+      case IncludedNotes.Accidental:
+        return AccidentalNotes;
+      default:
+        return [...NaturalNotes, ...AccidentalNotes];
     }
-    if (accidentalNotesEnabled) {
-      notes = [...notes, ...AccidentalNotes];
-    }
-
-    return notes;
-  }, [naturalNotesEnabled, accidentalNotesEnabled]);
+  }, [includedNotes]);
 
   const bpmInMs = useMemo(() => {
     return (60 / bpm) * 1000;
