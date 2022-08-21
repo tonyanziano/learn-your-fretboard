@@ -15,6 +15,17 @@ const volumeSliderStyle = css({
   margin: '8px 0',
   maxWidth: 200,
   cursor: 'pointer',
+  flexGrow: 2,
+});
+
+const volumeSliderContainerStyle = css({
+  display: 'flex',
+  flexFlow: 'row nowrap',
+});
+
+const volumeSliderValueStyle = css({
+  marginLeft: 8,
+  lineHeight: '32px',
 });
 
 const metronomeMuteGroupStyle = css({
@@ -55,7 +66,7 @@ export const AudioSettings: React.FC = () => {
 
   // scale metronome volume from [0 - 1] to [0 - 100]
   const metronomeVolumeScaledUp = useMemo(
-    () => metronomeVolume * 100,
+    () => Math.round(metronomeVolume * 100),
     [metronomeVolume]
   );
 
@@ -74,15 +85,18 @@ export const AudioSettings: React.FC = () => {
         </label>
       </div>
       <label htmlFor={volumeSliderId}>Metronome volume</label>
-      <input
-        css={volumeSliderStyle}
-        id={volumeSliderId}
-        max={100}
-        min={0}
-        onChange={onChangeVolume}
-        type={'range'}
-        value={metronomeVolumeScaledUp}
-      />
+      <span css={volumeSliderContainerStyle}>
+        <input
+          css={volumeSliderStyle}
+          id={volumeSliderId}
+          max={100}
+          min={0}
+          onChange={onChangeVolume}
+          type={'range'}
+          value={metronomeVolumeScaledUp}
+        />
+        <span css={volumeSliderValueStyle}>{metronomeVolumeScaledUp}</span>
+      </span>
     </>
   );
 };

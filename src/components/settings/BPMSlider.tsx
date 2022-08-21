@@ -10,6 +10,17 @@ const bpmSliderStyle = css({
   margin: '8px 0',
   maxWidth: 200,
   cursor: 'pointer',
+  flexGrow: 2,
+});
+
+const sliderContainerStyle = css({
+  display: 'flex',
+  flexFlow: 'row nowrap',
+});
+
+const sliderValueStyle = css({
+  marginLeft: 8,
+  lineHeight: '32px',
 });
 
 const bpmSliderId = 'bpm-slider-input';
@@ -28,15 +39,18 @@ export const BPMSlider: React.FC = () => {
   return (
     <>
       <label htmlFor={bpmSliderId}>BPM:</label>
-      <input
-        css={bpmSliderStyle}
-        id={bpmSliderId}
-        max={MaxBPM}
-        min={MinBPM}
-        onChange={onChangeBPM}
-        type={'range'}
-        value={currentBPM}
-      />
+      <span css={sliderContainerStyle}>
+        <input
+          css={bpmSliderStyle}
+          id={bpmSliderId}
+          max={MaxBPM}
+          min={MinBPM}
+          onChange={onChangeBPM}
+          type={'range'}
+          value={currentBPM}
+        />
+        <span css={sliderValueStyle}>{currentBPM}</span>
+      </span>
     </>
   );
 };
