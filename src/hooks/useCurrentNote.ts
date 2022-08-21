@@ -17,16 +17,19 @@ export const useCurrentNote = () => {
   const metronomeIsMuted = useSelector(selectMetronomeIsMuted);
   const includedNotes = useSelector(selectIncludedNotes);
   const currentInterval = useRef<NodeJS.Timer | undefined>();
+  const availableNotes = useRef<string[]>([]);
   const [currentNote, setCurrentNote] = useState('');
 
-  const availableNotes = useMemo(() => {
+  useMemo(() => {
     switch (includedNotes) {
       case IncludedNotes.Natural:
-        return NaturalNotes;
+        availableNotes.current = NaturalNotes;
+        return;
       case IncludedNotes.Accidental:
-        return AccidentalNotes;
+        availableNotes.current = AccidentalNotes;
+        return;
       default:
-        return [...NaturalNotes, ...AccidentalNotes];
+        availableNotes.current = [...NaturalNotes, ...AccidentalNotes];
     }
   }, [includedNotes]);
 
@@ -35,8 +38,10 @@ export const useCurrentNote = () => {
   }, [bpm]);
 
   const getAndPlayNote = useCallback(() => {
-    const noteIndex = Math.round(Math.random() * (availableNotes.length - 1));
-    setCurrentNote(availableNotes[noteIndex]);
+    const noteIndex = Math.round(
+      Math.random() * (availableNotes.current.length - 1)
+    );
+    setCurrentNote(availableNotes.current[noteIndex]);
 
     // play the metronome click
     if (metronomeClick.current.HAVE_ENOUGH_DATA) {
