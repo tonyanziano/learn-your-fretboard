@@ -19,5 +19,5 @@
     ],
     "react/jsx-sort-props": ["error"]
   },
-  "ignorePatterns": ["*.json"]
+  "ignorePatterns": ["**/*.json", "**/.*rc"]
 }
