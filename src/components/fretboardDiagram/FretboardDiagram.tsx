@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 /** @jsxFrag jsx **/
 import { css } from '@emotion/react';
+import { useCurrentNote } from '../../hooks/useCurrentNote';
 
 const diagramContainerStyle = css({
   width: '100%',
@@ -9,7 +10,9 @@ const diagramContainerStyle = css({
 
 const numberOfFrets = 12; // total number of frets to draw
 const numberOfFretBars = numberOfFrets + 1;
-const fretBarWidth = 4; // fret bar (separators between each fret) width in pixels
+const fretBarWidth = 2; // fret bar (separators between each fret) width in pixels
+const stringHeight = 8;
+const numberOfStrings = 6;
 
 type ContainerRect = {
   width: number;
@@ -22,6 +25,7 @@ export const FretboardDiagram: React.FC = () => {
   const [containerRect, setContainerRect] = useState<
     ContainerRect | undefined
   >();
+  const currentNote = useCurrentNote();
 
   useEffect(() => {
     // setup a resize observer to watch the container of the diagram for resizing
@@ -47,7 +51,7 @@ export const FretboardDiagram: React.FC = () => {
         `Got new container rect: ${containerRect}. Redrawing diagram...`
       );
 
-      // lets calculate the top,left points for each fret within the given container width (really just the left point since top will be the height of the container)
+      // calculate the top,left points for each fret within the given container width (really just the left point since top will be the height of the container)
       const fretBarPositions = [];
       const totalFretBarWidth = numberOfFretBars * fretBarWidth; // total width that the fret bars will occupy in the container
       const remainingWidth = containerWidth - totalFretBarWidth; // the space leftover that we can use to fill each fret
@@ -60,8 +64,16 @@ export const FretboardDiagram: React.FC = () => {
         const fretBarStartingPos = i * (fretWidth + fretBarWidth);
         fretBarPositions.push(fretBarStartingPos);
       }
-
       console.log('Fret bar starting positions: ', fretBarPositions);
+
+      // calculate the top points for each string within the given container height
+      const stringPositions = [];
+      const remainingHeight = containerHeight - numberOfStrings * stringHeight;
+      const spaceBetweenEachString = remainingHeight / (numberOfStrings + 1);
+      for (let i = 0; i < numberOfStrings; i++) {
+        // evenly distribute the strings (equal space between each)
+        stringPositions.push((spaceBetweenEachString + stringHeight) * (i + 1));
+      }
 
       // draw the canvas
       canvasRef.current.setAttribute('width', `${containerWidth}`);
@@ -79,9 +91,22 @@ export const FretboardDiagram: React.FC = () => {
         for (const fretBarPos of fretBarPositions) {
           ctx.fillRect(fretBarPos, 0, fretBarWidth, containerHeight);
         }
+
+        // strings
+        for (const stringPos of stringPositions) {
+          ctx.fillRect(0, stringPos, containerWidth, stringHeight); // change to string height?
+        }
       }
     }
   }, [containerRect, canvasRef]);
+
+  // whenever the current note changes, we want to highlight the note on the fretboard
+  useEffect(() => {
+    // brainstorm:
+    // - store a list of all frets and their corresponding notes per string
+    // - if the string contains the note, draw some sort of highlight on the diagram at that fret
+    // - might need to move this logic to the above diagram drawing function?
+  }, [currentNote]);
 
   return (
     <div css={diagramContainerStyle} ref={containerRef}>
