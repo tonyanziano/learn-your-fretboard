@@ -35,7 +35,6 @@ export const FretboardDiagram: React.FC = () => {
           const { width, height } = entry.contentRect;
 
           // when the container gets resized, we want to redraw the diagram
-          console.log(width, height);
           setContainerRect({ width, height });
         }
       });
@@ -47,9 +46,6 @@ export const FretboardDiagram: React.FC = () => {
   useEffect(() => {
     if (containerRect && canvasRef.current) {
       const { width: containerWidth, height: containerHeight } = containerRect;
-      console.log(
-        `Got new container rect: ${containerRect}. Redrawing diagram...`
-      );
 
       // calculate the top,left points for each fret within the given container width (really just the left point since top will be the height of the container)
       const fretBarPositions = [];
@@ -64,7 +60,6 @@ export const FretboardDiagram: React.FC = () => {
         const fretBarStartingPos = i * (fretWidth + fretBarWidth);
         fretBarPositions.push(fretBarStartingPos);
       }
-      console.log('Fret bar starting positions: ', fretBarPositions);
 
       // calculate the top points for each string within the given container height
       const stringPositions = [];
@@ -72,8 +67,25 @@ export const FretboardDiagram: React.FC = () => {
       const spaceBetweenEachString = remainingHeight / (numberOfStrings + 1);
       for (let i = 0; i < numberOfStrings; i++) {
         // evenly distribute the strings (equal space between each)
-        stringPositions.push((spaceBetweenEachString + stringHeight) * (i + 1));
+        stringPositions.push(
+          spaceBetweenEachString * (i + 1) + stringHeight * i
+        );
       }
+
+      // calculate the inlay positions (frets 3, 5, 7, 9, 12)
+      const verticalCenterOfFretboard = containerHeight / 2;
+      const inlayRadius = 10;
+      const inlayPositions = [
+        { x: fretWidth * 2.5 + 2 * fretBarWidth, y: verticalCenterOfFretboard },
+        { x: fretWidth * 4.5 + 4 * fretBarWidth, y: verticalCenterOfFretboard },
+        { x: fretWidth * 6.5 + 6 * fretBarWidth, y: verticalCenterOfFretboard },
+        { x: fretWidth * 8.5 + 8 * fretBarWidth, y: verticalCenterOfFretboard },
+        // TODO: 12th fret inlay should be double dots
+        {
+          x: fretWidth * 11.5 + 11 * fretBarWidth,
+          y: verticalCenterOfFretboard,
+        },
+      ];
 
       // draw the canvas
       canvasRef.current.setAttribute('width', `${containerWidth}`);
@@ -94,7 +106,14 @@ export const FretboardDiagram: React.FC = () => {
 
         // strings
         for (const stringPos of stringPositions) {
-          ctx.fillRect(0, stringPos, containerWidth, stringHeight); // change to string height?
+          ctx.fillRect(0, stringPos, containerWidth, stringHeight);
+        }
+
+        // inlays
+        for (const inlayPos of inlayPositions) {
+          ctx.beginPath();
+          ctx.arc(inlayPos.x, inlayPos.y, inlayRadius, 0, Math.PI * 2);
+          ctx.stroke();
         }
       }
     }
