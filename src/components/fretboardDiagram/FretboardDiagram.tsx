@@ -2,10 +2,18 @@ import React, { useEffect, useRef, useState } from 'react';
 /** @jsxFrag jsx **/
 import { css } from '@emotion/react';
 import { useCurrentNote } from '../../hooks/useCurrentNote';
+import { notesPerString } from './fretboardNotes';
 
 const diagramContainerStyle = css({
   width: '100%',
   height: '100%',
+  position: 'relative',
+});
+
+const overlayCanvasStyle = css({
+  position: 'absolute',
+  top: 0,
+  left: 0,
 });
 
 const numberOfFrets = 12; // total number of frets to draw
@@ -21,10 +29,12 @@ type ContainerRect = {
 
 export const FretboardDiagram: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const bgCanvasRef = useRef<HTMLCanvasElement>(null);
+  const overlayCanvasRef = useRef<HTMLCanvasElement>(null);
   const [containerRect, setContainerRect] = useState<
     ContainerRect | undefined
   >();
+  const [stringPositions, setStringPositions] = useState<number[]>([]);
   const currentNote = useCurrentNote();
 
   useEffect(() => {
@@ -44,7 +54,7 @@ export const FretboardDiagram: React.FC = () => {
 
   // whenever the container size changes, redraw the diagram
   useEffect(() => {
-    if (containerRect && canvasRef.current) {
+    if (containerRect && bgCanvasRef.current && overlayCanvasRef.current) {
       const { width: containerWidth, height: containerHeight } = containerRect;
 
       // calculate the top,left points for each fret within the given container width (really just the left point since top will be the height of the container)
@@ -62,15 +72,16 @@ export const FretboardDiagram: React.FC = () => {
       }
 
       // calculate the top points for each string within the given container height
-      const stringPositions = [];
+      const newStringPositions = [];
       const remainingHeight = containerHeight - numberOfStrings * stringHeight;
       const spaceBetweenEachString = remainingHeight / (numberOfStrings + 1);
       for (let i = 0; i < numberOfStrings; i++) {
         // evenly distribute the strings (equal space between each)
-        stringPositions.push(
+        newStringPositions.push(
           spaceBetweenEachString * (i + 1) + stringHeight * i
         );
       }
+      setStringPositions(newStringPositions);
 
       // calculate the inlay positions (frets 3, 5, 7, 9, 12)
       const verticalCenterOfFretboard = containerHeight / 2;
@@ -87,49 +98,94 @@ export const FretboardDiagram: React.FC = () => {
         },
       ];
 
-      // draw the canvas
-      canvasRef.current.setAttribute('width', `${containerWidth}`);
-      canvasRef.current.setAttribute('height', `${containerHeight}`);
+      // resize both canvases
+      bgCanvasRef.current.setAttribute('width', `${containerWidth}`);
+      bgCanvasRef.current.setAttribute('height', `${containerHeight}`);
+      overlayCanvasRef.current.setAttribute('width', `${containerWidth}`);
+      overlayCanvasRef.current.setAttribute('height', `${containerHeight}`);
 
-      // fill the canvas
-      const ctx = canvasRef.current.getContext('2d');
-      if (ctx) {
+      // fill the background canvas
+      const bgCtx = bgCanvasRef.current.getContext('2d');
+      if (bgCtx) {
         // background
-        ctx.fillStyle = 'white';
-        ctx.fillRect(0, 0, containerWidth, containerHeight);
+        bgCtx.fillStyle = 'white';
+        bgCtx.fillRect(0, 0, containerWidth, containerHeight);
 
         // frets
-        ctx.fillStyle = 'black';
+        bgCtx.fillStyle = 'black';
         for (const fretBarPos of fretBarPositions) {
-          ctx.fillRect(fretBarPos, 0, fretBarWidth, containerHeight);
+          bgCtx.fillRect(fretBarPos, 0, fretBarWidth, containerHeight);
         }
 
         // strings
-        for (const stringPos of stringPositions) {
-          ctx.fillRect(0, stringPos, containerWidth, stringHeight);
+        for (const stringPos of newStringPositions) {
+          bgCtx.fillRect(0, stringPos, containerWidth, stringHeight);
         }
 
         // inlays
         for (const inlayPos of inlayPositions) {
-          ctx.beginPath();
-          ctx.arc(inlayPos.x, inlayPos.y, inlayRadius, 0, Math.PI * 2);
-          ctx.stroke();
+          bgCtx.beginPath();
+          bgCtx.arc(inlayPos.x, inlayPos.y, inlayRadius, 0, Math.PI * 2);
+          bgCtx.stroke();
         }
       }
     }
-  }, [containerRect, canvasRef]);
+  }, [containerRect, bgCanvasRef, overlayCanvasRef]);
 
   // whenever the current note changes, we want to highlight the note on the fretboard
   useEffect(() => {
-    // brainstorm:
-    // - store a list of all frets and their corresponding notes per string
-    // - if the string contains the note, draw some sort of highlight on the diagram at that fret
-    // - might need to move this logic to the above diagram drawing function?
-  }, [currentNote]);
+    if (overlayCanvasRef.current && currentNote) {
+      // TODO: the note that we are drawing is currently out of sync with what is displayed in CurrentNote.tsx
+      console.log('drawing current note: ', currentNote);
+      const ctx = overlayCanvasRef.current.getContext('2d');
+      if (ctx) {
+        // clear the diagram
+        ctx.clearRect(
+          0,
+          0,
+          overlayCanvasRef.current.width,
+          overlayCanvasRef.current.height
+        );
+
+        // calculate the width of a fret (TODO: store this in state after drawing the diagram and get it from there)
+        const totalFretBarWidth = numberOfFretBars * fretBarWidth;
+        const fretWidth =
+          (overlayCanvasRef.current.width - totalFretBarWidth) / numberOfFrets;
+
+        // for each string, look up the note on that string
+        // if it exists, grab the coordinate of where we should draw the highlight and draw it
+        for (
+          let stringNum = 0;
+          stringNum < 1 /*numberOfStrings*/;
+          stringNum++
+        ) {
+          const stringNotes = notesPerString[stringNum];
+          const { fret = undefined } =
+            stringNotes[currentNote.toLocaleLowerCase()];
+
+          if (fret) {
+            // calculate the fret position in relationship to the background diagram
+            const x =
+              fret * fretWidth + (fret - 1) * fretBarWidth - fretWidth / 2;
+            const y = stringPositions[stringNum] + stringHeight / 2; // want midpoint of the string
+
+            // draw the highlight on that string
+            ctx.strokeStyle = 'green';
+            ctx.fillStyle = 'green';
+            ctx.beginPath();
+            ctx.arc(x, y, 15 /* let's make this a constant */, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.fill();
+          }
+        }
+      }
+    }
+  }, [currentNote, overlayCanvasRef, stringPositions]);
 
   return (
     <div css={diagramContainerStyle} ref={containerRef}>
-      <canvas ref={canvasRef}></canvas>
+      <canvas ref={bgCanvasRef}></canvas>
+      <canvas css={overlayCanvasStyle} ref={overlayCanvasRef}></canvas>
     </div>
   );
 };
