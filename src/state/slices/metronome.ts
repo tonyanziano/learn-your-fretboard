@@ -6,7 +6,7 @@ type MetronomeState = {
 };
 
 const initialState: MetronomeState = {
-  muted: false,
+  muted: true,
   volume: 0.4,
 };
 
