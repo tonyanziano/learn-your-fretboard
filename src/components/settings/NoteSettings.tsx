@@ -76,7 +76,7 @@ export const NoteSettings: React.FC = () => {
         const onChange = () => onChangeRadioOption(option.includedNotes);
 
         return (
-          <span css={radioOptionStyle}>
+          <span css={radioOptionStyle} key={option.id}>
             <input
               checked={includedNotes === option.includedNotes}
               css={radioButtonStyle}
