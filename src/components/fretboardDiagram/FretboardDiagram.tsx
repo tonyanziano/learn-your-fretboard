@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 /** @jsxFrag jsx **/
 import { css } from '@emotion/react';
-import { useCurrentNote } from '../../hooks/useCurrentNote';
 import { notesPerString } from './fretboardNotes';
+import { useSelector } from 'react-redux';
+import { selectCurrentNote } from '../../state/selectors/currentNote';
 
 const diagramContainerStyle = css({
   width: '100%',
@@ -35,7 +36,8 @@ export const FretboardDiagram: React.FC = () => {
     ContainerRect | undefined
   >();
   const [stringPositions, setStringPositions] = useState<number[]>([]);
-  const currentNote = useCurrentNote();
+
+  const { note: currentNote } = useSelector(selectCurrentNote);
 
   useEffect(() => {
     // setup a resize observer to watch the container of the diagram for resizing
@@ -43,8 +45,6 @@ export const FretboardDiagram: React.FC = () => {
       const observer = new ResizeObserver(entries => {
         for (const entry of entries) {
           const { width, height } = entry.contentRect;
-
-          // when the container gets resized, we want to redraw the diagram
           setContainerRect({ width, height });
         }
       });
@@ -135,8 +135,6 @@ export const FretboardDiagram: React.FC = () => {
   // whenever the current note changes, we want to highlight the note on the fretboard
   useEffect(() => {
     if (overlayCanvasRef.current && currentNote) {
-      // TODO: the note that we are drawing is currently out of sync with what is displayed in CurrentNote.tsx
-      console.log('drawing current note: ', currentNote);
       const ctx = overlayCanvasRef.current.getContext('2d');
       if (ctx) {
         // clear the diagram
