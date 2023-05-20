@@ -22,6 +22,7 @@ const numberOfFretBars = numberOfFrets + 1;
 const fretBarWidth = 2; // fret bar (separators between each fret) width in pixels
 const stringHeight = 8;
 const numberOfStrings = 6;
+const currentFretHighlightRadius = 15;
 
 type ContainerRect = {
   width: number;
@@ -175,7 +176,7 @@ export const FretboardDiagram: React.FC = () => {
             ctx.strokeStyle = 'green';
             ctx.fillStyle = 'green';
             ctx.beginPath();
-            ctx.arc(x, y, 15 /* let's make this a constant */, 0, Math.PI * 2);
+            ctx.arc(x, y, currentFretHighlightRadius, 0, Math.PI * 2);
             ctx.stroke();
             ctx.fill();
           }
