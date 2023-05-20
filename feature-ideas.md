@@ -5,3 +5,4 @@
 - Configurable diagram dimensions, fret bar, and string widths
 - Change tunings
 - "Quiz Mode" - delay showing the note on the fretboard for a (configurable?) time period
+- Display numbers above frets (configurable)
