@@ -85,16 +85,20 @@ export const FretboardDiagram: React.FC = () => {
 
       // calculate the inlay positions (frets 3, 5, 7, 9, 12)
       const verticalCenterOfFretboard = containerHeight / 2;
+      const twelfthFretOffset = 80;
       const inlayRadius = 10;
       const inlayPositions = [
         { x: fretWidth * 2.5 + 2 * fretBarWidth, y: verticalCenterOfFretboard },
         { x: fretWidth * 4.5 + 4 * fretBarWidth, y: verticalCenterOfFretboard },
         { x: fretWidth * 6.5 + 6 * fretBarWidth, y: verticalCenterOfFretboard },
         { x: fretWidth * 8.5 + 8 * fretBarWidth, y: verticalCenterOfFretboard },
-        // TODO: 12th fret inlay should be double dots
         {
           x: fretWidth * 11.5 + 11 * fretBarWidth,
-          y: verticalCenterOfFretboard,
+          y: verticalCenterOfFretboard + twelfthFretOffset,
+        },
+        {
+          x: fretWidth * 11.5 + 11 * fretBarWidth,
+          y: verticalCenterOfFretboard - twelfthFretOffset,
         },
       ];
 
