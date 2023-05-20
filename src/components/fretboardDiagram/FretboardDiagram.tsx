@@ -93,11 +93,11 @@ export const FretboardDiagram: React.FC = () => {
         { x: fretWidth * 6.5 + 6 * fretBarWidth, y: verticalCenterOfFretboard },
         { x: fretWidth * 8.5 + 8 * fretBarWidth, y: verticalCenterOfFretboard },
         {
-          x: fretWidth * 11.5 + 11 * fretBarWidth,
+          x: fretWidth * 11.5 + 11 * fretBarWidth, // 12th fret inlay #1
           y: verticalCenterOfFretboard + twelfthFretOffset,
         },
         {
-          x: fretWidth * 11.5 + 11 * fretBarWidth,
+          x: fretWidth * 11.5 + 11 * fretBarWidth, // 12th fret inlay #2
           y: verticalCenterOfFretboard - twelfthFretOffset,
         },
       ];
@@ -168,7 +168,7 @@ export const FretboardDiagram: React.FC = () => {
           if (fret) {
             // calculate the fret position in relationship to the background diagram
             const x =
-              fret * fretWidth + (fret - 1) * fretBarWidth - fretWidth / 2;
+              fret * fretWidth + (fret - 1) * fretBarWidth - fretWidth / 2; // (length of N frets) + (length of N-1 fret bars) - (half of a fret length)
             const y = stringPositions[stringNum] + stringHeight / 2; // want midpoint of the string
 
             // draw the highlight on that string
