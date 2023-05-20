@@ -70,6 +70,7 @@ export const NoteSettings: React.FC = () => {
   }, []);
 
   return (
+    // TODO: Could turn the <div><label>{children}</label></div> pattern into a React component for other settings groups
     <div aria-labelledby={radioGroupId} css={radioGroupStyle}>
       <label id={radioGroupId}>Included notes</label>
       {radioOptions.map(option => {

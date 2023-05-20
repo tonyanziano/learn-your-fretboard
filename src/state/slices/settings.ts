@@ -8,10 +8,12 @@ export enum IncludedNotes {
 
 type SettingsState = {
   includedNotes: IncludedNotes;
+  expanded: boolean;
 };
 
 const initialState: SettingsState = {
   includedNotes: IncludedNotes.Natural,
+  expanded: true,
 };
 
 export const settingsSlice = createSlice({
@@ -21,7 +23,11 @@ export const settingsSlice = createSlice({
     setIncludedNotes: (state, action: PayloadAction<IncludedNotes>) => {
       state.includedNotes = action.payload;
     },
+    toggleExpanded: state => {
+      state.expanded = !state.expanded;
+    },
   },
 });
 
-export const { setIncludedNotes } = settingsSlice.actions;
+export const { setIncludedNotes, toggleExpanded: toggleSettingsExpanded } =
+  settingsSlice.actions;

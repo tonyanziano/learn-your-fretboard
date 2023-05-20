@@ -7,3 +7,8 @@ export const selectIncludedNotes = createSelector(
   selectSettingsState,
   state => state.includedNotes
 );
+
+export const selectSettingsExpanded = createSelector(
+  selectSettingsState,
+  state => state.expanded
+);
