@@ -157,11 +157,7 @@ export const FretboardDiagram: React.FC = () => {
 
         // for each string, look up the note on that string
         // if it exists, grab the coordinate of where we should draw the highlight and draw it
-        for (
-          let stringNum = 0;
-          stringNum < 1 /*numberOfStrings*/;
-          stringNum++
-        ) {
+        for (let stringNum = 0; stringNum < numberOfStrings; stringNum++) {
           const stringNotes = notesPerString[stringNum];
           const { fret = undefined } =
             stringNotes[currentNote.toLocaleLowerCase()];
