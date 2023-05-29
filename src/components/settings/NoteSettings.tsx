@@ -5,14 +5,7 @@ import { IncludedNotes, setIncludedNotes } from '../../state/slices/settings';
 
 /** @jsx jsx **/
 import { css } from '@emotion/react';
-
-const radioGroupStyle = css({
-  padding: 8,
-  margin: 0,
-  marginBottom: 20,
-  border: '1px solid #82807f',
-  borderRadius: 4,
-});
+import { SettingsGroup } from '../common/SettingsGroup';
 
 const radioOptionStyle = css({
   display: 'flex',
@@ -32,7 +25,6 @@ const radioButtonStyle = css({
   marginRight: 8,
 });
 
-const radioGroupId = 'note-settings-radio-group';
 const allRadioId = 'note-settings-all-radio';
 const naturalRadioId = 'note-settings-natural-radio';
 const accidentalRadioId = 'note-settings-accidental-radio';
@@ -70,9 +62,7 @@ export const NoteSettings: React.FC = () => {
   }, []);
 
   return (
-    // TODO: Could turn the <div><label>{children}</label></div> pattern into a React component for other settings groups
-    <div aria-labelledby={radioGroupId} css={radioGroupStyle}>
-      <label id={radioGroupId}>Included notes</label>
+    <SettingsGroup label={'Included notes'}>
       {radioOptions.map(option => {
         const onChange = () => onChangeRadioOption(option.includedNotes);
 
@@ -89,6 +79,6 @@ export const NoteSettings: React.FC = () => {
           </span>
         );
       })}
-    </div>
+    </SettingsGroup>
   );
 };
