@@ -29,6 +29,18 @@ const headerTextStyle = css({
 
 const expandButton = css({
   marginLeft: 48,
+  appearance: 'none',
+  backgroundColor: '#2e2d2d',
+  border: '1px solid #ccc',
+  borderRadius: 4,
+  padding: '6px 16px',
+  color: '#ccc',
+  cursor: 'pointer',
+
+  '&:hover': {
+    backgroundColor: '#1f1e1e',
+    color: '#fff',
+  },
 });
 
 const contentStyle = css({
