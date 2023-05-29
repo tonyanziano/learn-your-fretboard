@@ -1,6 +1,7 @@
 import React from 'react';
 /** @jsxFrag jsx **/
 import { css } from '@emotion/react';
+import { DonateButton } from './DonateButton';
 
 const footerStyle = css({
   display: 'flex',
@@ -8,6 +9,10 @@ const footerStyle = css({
   marginTop: 'auto',
   alignItems: 'center',
   padding: '16px 0',
+});
+
+const donateBlurbStyle = css({
+  margin: '8px 0',
 });
 
 export const Footer: React.FC = () => {
@@ -25,6 +30,11 @@ export const Footer: React.FC = () => {
           Mike Koenig
         </a>
       </span>
+      <span css={donateBlurbStyle}>
+        If you found this useful and want to show your support, feel free to
+        donate.
+      </span>
+      <DonateButton />
     </footer>
   );
 };
