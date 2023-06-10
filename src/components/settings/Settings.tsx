@@ -72,7 +72,6 @@ export const Settings: React.FC = () => {
         <div css={contentStyle}>
           <NoteSettings />
           <AudioSettings />
-          <BPMSlider />
         </div>
       ) : null}
     </section>

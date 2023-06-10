@@ -10,6 +10,8 @@ import {
   setMetronomeVolume,
   toggleMetronomeMute,
 } from '../../state/slices/metronome';
+import { SettingsGroup } from '../common/SettingsGroup';
+import { BPMSlider } from './BPMSlider';
 
 const volumeSliderStyle = css({
   margin: '8px 0',
@@ -71,7 +73,7 @@ export const AudioSettings: React.FC = () => {
   );
 
   return (
-    <>
+    <SettingsGroup label={'Metronome Settings'}>
       <div css={metronomeMuteGroupStyle}>
         <input
           checked={metronomeIsMuted}
@@ -97,6 +99,7 @@ export const AudioSettings: React.FC = () => {
         />
         <span css={volumeSliderValueStyle}>{metronomeVolumeScaledUp}</span>
       </span>
-    </>
+      <BPMSlider />
+    </SettingsGroup>
   );
 };
