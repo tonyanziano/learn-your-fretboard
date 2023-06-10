@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AccidentalNotes, NaturalNotes } from '../constants';
 import { selectBPM } from '../state/selectors/bpm';
@@ -19,6 +19,7 @@ export const generateCurrentNote = () => {
   const includedNotes = useSelector(selectIncludedNotes);
   const currentInterval = useRef<NodeJS.Timer | undefined>();
   const availableNotes = useRef<string[]>([]);
+  const [previouslyGeneratedNote, setPreviouslyGeneratedNote] = useState('');
   const dispatch = useDispatch();
 
   useMemo(() => {
@@ -39,16 +40,23 @@ export const generateCurrentNote = () => {
   }, [bpm]);
 
   const getAndPlayNote = useCallback(() => {
-    const noteIndex = Math.round(
-      Math.random() * (availableNotes.current.length - 1)
-    );
-    dispatch(setCurrentNote(availableNotes.current[noteIndex]));
+    // ensure we don't repeat the same note
+    let generatedNote;
+    do {
+      const noteIndex = Math.round(
+        Math.random() * (availableNotes.current.length - 1)
+      );
+      generatedNote = availableNotes.current[noteIndex];
+    } while (generatedNote === previouslyGeneratedNote);
+
+    dispatch(setCurrentNote(generatedNote));
+    setPreviouslyGeneratedNote(generatedNote);
 
     // play the metronome click
     if (metronomeClick.current.HAVE_ENOUGH_DATA) {
       metronomeClick.current.play();
     }
-  }, [metronomeClick, availableNotes]);
+  }, [metronomeClick, availableNotes, previouslyGeneratedNote]);
 
   // adjust the audio of the metronome click according to the settings
   useEffect(() => {
