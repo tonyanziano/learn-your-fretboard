@@ -183,6 +183,7 @@ export const FretboardDiagram: React.FC = () => {
 
   return (
     <div css={diagramContainerStyle} ref={containerRef}>
+      {/** TODO: potentially add components responsible for rendering floating string names and fret numbers here */}
       <canvas ref={bgCanvasRef}></canvas>
       <canvas css={overlayCanvasStyle} ref={overlayCanvasRef}></canvas>
     </div>
