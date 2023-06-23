@@ -3,6 +3,7 @@ import { bpmSlice } from './slices/bpm';
 import { metronomeSlice } from './slices/metronome';
 import { currentNoteSlice } from './slices/currentNote';
 import { settingsSlice } from './slices/settings';
+import { tabSlice } from './slices/tab';
 
 export const store = configureStore({
   reducer: combineReducers({
@@ -10,6 +11,7 @@ export const store = configureStore({
     metronome: metronomeSlice.reducer,
     currentNote: currentNoteSlice.reducer,
     settings: settingsSlice.reducer,
+    tab: tabSlice.reducer,
   }),
 });
 
