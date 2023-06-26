@@ -12,7 +12,8 @@ const style = css({
   display: 'flex',
   flexFlow: 'column nowrap',
   padding: '0',
-  border: '1px solid gray',
+  border: '1px solid #ccc',
+  borderTop: 0,
 });
 
 const headerStyle = css({
@@ -20,7 +21,7 @@ const headerStyle = css({
   flexFlow: 'row nowrap',
   alignItems: 'center',
   padding: '12px 24px',
-  borderBottom: '1px solid gray',
+  borderBottom: '1px solid #ccc',
 });
 
 const headerTextStyle = css({

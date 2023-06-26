@@ -8,7 +8,11 @@ const tabBarStyle = css({
   display: 'flex',
   flexFlow: 'row nowrap',
   alignItems: 'center',
+  justifySelf: 'flex-start',
   height: 48,
+  width: '100%',
+  backgroundColor: '#282626',
+  borderBottom: '1px solid #ccc',
 });
 
 export type TabInfo = {

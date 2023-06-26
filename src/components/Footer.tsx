@@ -8,7 +8,9 @@ const footerStyle = css({
   flexFlow: 'column nowrap',
   marginTop: 'auto',
   alignItems: 'center',
+  justifySelf: 'flex-end',
   padding: '16px 0',
+  borderTop: '1px solid #ccc',
 });
 
 const donateBlurbStyle = css({

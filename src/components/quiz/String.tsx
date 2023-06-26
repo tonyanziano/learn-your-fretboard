@@ -1,9 +1,5 @@
 import React from 'react';
-/** @jsxFrag jsx **/
-import { css } from '@emotion/react';
 import { Note } from './Note';
-
-const style = css({});
 
 type StringProps = {
   notes: string[];

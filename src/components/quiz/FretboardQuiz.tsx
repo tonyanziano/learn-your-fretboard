@@ -7,46 +7,38 @@ const containerStyle = css({
   backgroundColor: '#fff',
   display: 'grid',
   gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr', // 12 columns; one for each fret
+  gridTemplateRows: 'auto 48px 48px 48px 48px 48px 48px 30px', // fret numbers, string 1, 2, 3, 4, 5, 6, bottom padding
   width: '100%',
-  height: 500,
-});
-
-const topStyle = css({
-  borderBottom: '1px solid #000',
-  height: 30,
-  gridColumn: '1 / 13',
-  gridRow: 2,
+  height: 'auto',
 });
 
 const bottomStyle = css({
   borderTop: '1px solid #000',
-  height: 30,
   gridColumn: '1 / 13',
-  gridRow: 9,
+  gridRow: 8,
 });
 
 const fretNumberStyle = css({
   color: '#000',
+  borderBottom: '1px solid #000',
   paddingTop: 24,
+  paddingBottom: 12,
   textAlign: 'center',
+  gridRow: 1,
 });
 
 const strings = ['E', 'A', 'D', 'G', 'B', 'E'];
-const dummyNotes = [
-  'F',
-  'F#',
-  'G',
-  'G#',
-  'A',
-  'A#',
-  'B',
-  'C',
-  'C#',
-  'D',
-  'D#',
-  'E',
+const notesPerString = [
+  // high E
+  ['F', 'F#', 'G', 'G#', 'A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E'],
+  ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'],
+  ['G#', 'A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G'],
+  ['D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B', 'C', 'C#', 'D'],
+  ['A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A'],
+  // low E
+  ['F', 'F#', 'G', 'G#', 'A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E'],
 ];
-const getNotesForString = (_stringNum: number) => dummyNotes;
+const getNotesForString = (stringNum: number) => notesPerString[stringNum];
 const fretNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
 export const FretboardQuiz: React.FC = () => {
@@ -57,7 +49,6 @@ export const FretboardQuiz: React.FC = () => {
           {fNum}
         </div>
       ))}
-      <div css={topStyle} key={'top-padding'}></div>
       {strings.map((_s, sNum) => {
         const notes = getNotesForString(sNum);
         return <String key={`string-${sNum}`} notes={notes} number={sNum} />;

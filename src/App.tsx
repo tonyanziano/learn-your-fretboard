@@ -17,6 +17,12 @@ const diagramContainerStyle = css({
   padding: '24px 96px 360px 96px',
 });
 
+const contentContainerStyle = css({
+  height: '100%',
+  width: '100%',
+  overflowY: 'auto',
+});
+
 export const App: React.FC = () => {
   const currentTab = useSelector(selectCurrentTab);
 
@@ -37,7 +43,7 @@ export const App: React.FC = () => {
   return (
     <>
       <TabBar />
-      {content}
+      <div css={contentContainerStyle}>{content}</div>
       <Footer />
     </>
   );

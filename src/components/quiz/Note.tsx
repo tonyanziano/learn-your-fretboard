@@ -6,7 +6,6 @@ const noteStyle = css({
   backgroundColor: '#fff',
   borderLeft: '1px solid #000',
   cursor: 'pointer',
-  height: 48,
   position: 'relative',
 
   ':hover': {
