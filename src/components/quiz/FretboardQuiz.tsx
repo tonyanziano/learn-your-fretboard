@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 /** @jsxFrag jsx **/
 import { css } from '@emotion/react';
 import { String } from './String';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectQuizNote } from '../../state/selectors/currentNote';
+import { getUniqueNote } from '../../hooks/getUniqueNote';
+import { AccidentalNotes, NaturalNotes } from '../../constants';
+import { setQuizNote } from '../../state/slices/currentNote';
 
 const containerStyle = css({
   backgroundColor: '#fff',
@@ -27,6 +32,8 @@ const fretNumberStyle = css({
   gridRow: 1,
 });
 
+const allNotes = [...NaturalNotes, ...AccidentalNotes];
+
 const strings = ['E', 'A', 'D', 'G', 'B', 'E'];
 const notesPerString = [
   // high E
@@ -42,18 +49,28 @@ const getNotesForString = (stringNum: number) => notesPerString[stringNum];
 const fretNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
 export const FretboardQuiz: React.FC = () => {
+  const quizNote = useSelector(selectQuizNote);
+  const dispatch = useDispatch();
+  const onStartClick = useCallback(() => {
+    dispatch(setQuizNote(getUniqueNote(allNotes, quizNote)));
+  }, [dispatch, quizNote]);
+
   return (
-    <div css={containerStyle}>
-      {fretNumbers.map(fNum => (
-        <div css={fretNumberStyle} key={`fret-number-${fNum}`}>
-          {fNum}
-        </div>
-      ))}
-      {strings.map((_s, sNum) => {
-        const notes = getNotesForString(sNum);
-        return <String key={`string-${sNum}`} notes={notes} number={sNum} />;
-      })}
-      <div css={bottomStyle} key={'bottom-padding'}></div>
-    </div>
+    <>
+      <h1>{quizNote}</h1>
+      <button onClick={onStartClick}>Start</button>
+      <div css={containerStyle}>
+        {fretNumbers.map(fNum => (
+          <div css={fretNumberStyle} key={`fret-number-${fNum}`}>
+            {fNum}
+          </div>
+        ))}
+        {strings.map((_s, sNum) => {
+          const notes = getNotesForString(sNum);
+          return <String key={`string-${sNum}`} notes={notes} number={sNum} />;
+        })}
+        <div css={bottomStyle} key={'bottom-padding'}></div>
+      </div>
+    </>
   );
 };

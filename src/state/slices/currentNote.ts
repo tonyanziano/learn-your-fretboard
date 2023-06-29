@@ -1,21 +1,26 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type CurrentNoteState = {
-  note: string;
+  playAlongNote: string;
+  quizNote: string;
 };
 
 const initialState: CurrentNoteState = {
-  note: '',
+  playAlongNote: '',
+  quizNote: '',
 };
 
 export const currentNoteSlice = createSlice({
   name: 'currentNote',
   initialState,
   reducers: {
-    setCurrentNote: (state, action: PayloadAction<string>) => {
-      state.note = action.payload;
+    setPlayAlongNote: (state, action: PayloadAction<string>) => {
+      state.playAlongNote = action.payload;
+    },
+    setQuizNote: (state, action: PayloadAction<string>) => {
+      state.quizNote = action.payload;
     },
   },
 });
 
-export const { setCurrentNote } = currentNoteSlice.actions;
+export const { setPlayAlongNote, setQuizNote } = currentNoteSlice.actions;

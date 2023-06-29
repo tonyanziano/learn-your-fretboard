@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { css } from '@emotion/react';
 import { notesPerString } from './fretboardNotes';
 import { useSelector } from 'react-redux';
-import { selectCurrentNote } from '../../state/selectors/currentNote';
+import { selectPlayAlongNote } from '../../state/selectors/currentNote';
 
 const diagramContainerStyle = css({
   width: '100%',
@@ -38,7 +38,7 @@ export const FretboardDiagram: React.FC = () => {
   >();
   const [stringPositions, setStringPositions] = useState<number[]>([]);
 
-  const { note: currentNote } = useSelector(selectCurrentNote);
+  const currentNote = useSelector(selectPlayAlongNote);
 
   useEffect(() => {
     // setup a resize observer to watch the container of the diagram for resizing

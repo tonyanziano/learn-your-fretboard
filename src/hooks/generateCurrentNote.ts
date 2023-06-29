@@ -7,8 +7,9 @@ import {
   selectMetronomeVolume,
 } from '../state/selectors/metronome';
 import { selectIncludedNotes } from '../state/selectors/settings';
-import { setCurrentNote } from '../state/slices/currentNote';
+import { setPlayAlongNote } from '../state/slices/currentNote';
 import { IncludedNotes } from '../state/slices/settings';
+import { getUniqueNote } from './getUniqueNote';
 
 /** Generates the current note and plays metronome audio */
 export const generateCurrentNote = () => {
@@ -40,16 +41,12 @@ export const generateCurrentNote = () => {
   }, [bpm]);
 
   const getAndPlayNote = useCallback(() => {
-    // ensure we don't repeat the same note
-    let generatedNote;
-    do {
-      const noteIndex = Math.round(
-        Math.random() * (availableNotes.current.length - 1)
-      );
-      generatedNote = availableNotes.current[noteIndex];
-    } while (generatedNote === previouslyGeneratedNote);
+    const generatedNote = getUniqueNote(
+      availableNotes.current,
+      previouslyGeneratedNote
+    );
 
-    dispatch(setCurrentNote(generatedNote));
+    dispatch(setPlayAlongNote(generatedNote));
     setPreviouslyGeneratedNote(generatedNote);
 
     // play the metronome click

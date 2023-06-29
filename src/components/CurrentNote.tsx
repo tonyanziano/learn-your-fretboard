@@ -2,7 +2,7 @@ import React from 'react';
 /** @jsxFrag jsx **/
 import { css } from '@emotion/react';
 import { useSelector } from 'react-redux';
-import { selectCurrentNote } from '../state/selectors/currentNote';
+import { selectPlayAlongNote } from '../state/selectors/currentNote';
 import { generateCurrentNote } from '../hooks/generateCurrentNote';
 
 const currentNoteHeaderStyle = css({
@@ -19,7 +19,7 @@ const currentNoteStyle = css({
  * Displays the current note that should be played by the user
  */
 export const CurrentNote: React.FC = () => {
-  const { note: currentNote } = useSelector(selectCurrentNote);
+  const currentNote = useSelector(selectPlayAlongNote);
   generateCurrentNote();
 
   return (
