@@ -10,5 +10,9 @@ const selectQuizNote = createSelector(
   selectCurrentNoteState,
   state => state.quizNote
 );
+const selectQuizScore = createSelector(
+  selectCurrentNoteState,
+  state => state.quizScore
+);
 
-export { selectPlayAlongNote, selectQuizNote };
+export { selectPlayAlongNote, selectQuizNote, selectQuizScore };

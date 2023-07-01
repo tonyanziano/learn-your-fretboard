@@ -3,7 +3,10 @@ import React, { useCallback } from 'react';
 import { css } from '@emotion/react';
 import { String } from './String';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectQuizNote } from '../../state/selectors/currentNote';
+import {
+  selectQuizNote,
+  selectQuizScore,
+} from '../../state/selectors/currentNote';
 import { getUniqueNote } from '../../hooks/getUniqueNote';
 import { AccidentalNotes, NaturalNotes } from '../../constants';
 import { setQuizNote } from '../../state/slices/currentNote';
@@ -50,6 +53,7 @@ const fretNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
 export const FretboardQuiz: React.FC = () => {
   const quizNote = useSelector(selectQuizNote);
+  const { correct, total } = useSelector(selectQuizScore);
   const dispatch = useDispatch();
   const onStartClick = useCallback(() => {
     dispatch(setQuizNote(getUniqueNote(allNotes, quizNote)));
@@ -59,6 +63,7 @@ export const FretboardQuiz: React.FC = () => {
     <>
       <h1>{quizNote}</h1>
       <button onClick={onStartClick}>Start</button>
+      <span>Score: {total === 0 ? 'N/A' : `${correct} / ${total}`}</span>
       <div css={containerStyle}>
         {fretNumbers.map(fNum => (
           <div css={fretNumberStyle} key={`fret-number-${fNum}`}>
