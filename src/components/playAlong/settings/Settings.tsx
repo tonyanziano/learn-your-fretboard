@@ -5,8 +5,8 @@ import { AudioSettings } from './AudioSettings';
 import { css } from '@emotion/react';
 import { NoteSettings } from './NoteSettings';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectSettingsExpanded } from '../../state/selectors/settings';
-import { toggleSettingsExpanded } from '../../state/slices/settings';
+import { selectSettingsExpanded } from '../../../state/selectors/settings';
+import { toggleSettingsExpanded } from '../../../state/slices/settings';
 
 const style = css({
   display: 'flex',

@@ -1,10 +1,10 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 
-const selectCurrentNoteState = (state: RootState) => state.currentNote;
+const selectPlayAlongState = (state: RootState) => state.playAlong;
 const selectPlayAlongNote = createSelector(
-  selectCurrentNoteState,
-  state => state.playAlongNote
+  selectPlayAlongState,
+  state => state.note
 );
 
 export { selectPlayAlongNote };

@@ -2,9 +2,9 @@
 import { css } from '@emotion/react';
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { MaxBPM, MinBPM } from '../../constants';
-import { selectBPM } from '../../state/selectors/bpm';
-import { setBPM } from '../../state/slices/bpm';
+import { MaxBPM, MinBPM } from '../../../constants';
+import { selectBPM } from '../../../state/selectors/bpm';
+import { setBPM } from '../../../state/slices/bpm';
 
 const bpmSliderStyle = css({
   margin: '8px 0',

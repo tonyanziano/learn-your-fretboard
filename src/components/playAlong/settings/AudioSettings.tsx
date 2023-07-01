@@ -5,12 +5,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   selectMetronomeIsMuted,
   selectMetronomeVolume,
-} from '../../state/selectors/metronome';
+} from '../../../state/selectors/metronome';
 import {
   setMetronomeVolume,
   toggleMetronomeMute,
-} from '../../state/slices/metronome';
-import { SettingsGroup } from '../common/SettingsGroup';
+} from '../../../state/slices/metronome';
+import { SettingsGroup } from '../../common/SettingsGroup';
 import { BPMSlider } from './BPMSlider';
 
 const volumeSliderStyle = css({

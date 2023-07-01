@@ -1,19 +1,19 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { bpmSlice } from './slices/bpm';
 import { metronomeSlice } from './slices/metronome';
-import { currentNoteSlice } from './slices/currentNote';
 import { settingsSlice } from './slices/settings';
 import { tabSlice } from './slices/tab';
 import { quizSlice } from './slices/quiz';
+import { playAlongSlice } from './slices/playAlong';
 
 export const store = configureStore({
   reducer: combineReducers({
     bpm: bpmSlice.reducer,
     metronome: metronomeSlice.reducer,
-    currentNote: currentNoteSlice.reducer,
+    playAlong: playAlongSlice.reducer,
+    quiz: quizSlice.reducer,
     settings: settingsSlice.reducer,
     tab: tabSlice.reducer,
-    quiz: quizSlice.reducer,
   }),
 });
 

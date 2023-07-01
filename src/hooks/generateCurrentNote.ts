@@ -7,7 +7,7 @@ import {
   selectMetronomeVolume,
 } from '../state/selectors/metronome';
 import { selectIncludedNotes } from '../state/selectors/settings';
-import { setPlayAlongNote } from '../state/slices/currentNote';
+import { setPlayAlongNote } from '../state/slices/playAlong';
 import { IncludedNotes } from '../state/slices/settings';
 import { getUniqueNote } from './getUniqueNote';
 

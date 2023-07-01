@@ -2,8 +2,8 @@ import React from 'react';
 /** @jsxFrag jsx **/
 import { css } from '@emotion/react';
 import { useSelector } from 'react-redux';
-import { selectPlayAlongNote } from '../state/selectors/currentNote';
-import { generateCurrentNote } from '../hooks/generateCurrentNote';
+import { selectPlayAlongNote } from '../../state/selectors/playAlong';
+import { generateCurrentNote } from '../../hooks/generateCurrentNote';
 
 const currentNoteHeaderStyle = css({
   textAlign: 'center',

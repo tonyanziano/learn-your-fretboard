@@ -1,11 +1,14 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectIncludedNotes } from '../../state/selectors/settings';
-import { IncludedNotes, setIncludedNotes } from '../../state/slices/settings';
+import { selectIncludedNotes } from '../../../state/selectors/settings';
+import {
+  IncludedNotes,
+  setIncludedNotes,
+} from '../../../state/slices/settings';
 
 /** @jsx jsx **/
 import { css } from '@emotion/react';
-import { SettingsGroup } from '../common/SettingsGroup';
+import { SettingsGroup } from '../../common/SettingsGroup';
 
 const radioOptionStyle = css({
   display: 'flex',

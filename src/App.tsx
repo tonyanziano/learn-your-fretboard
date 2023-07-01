@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
-import { CurrentNote } from './components/CurrentNote';
+import { CurrentNote } from './components/playAlong/CurrentNote';
 import { Footer } from './components/Footer';
-import { FretboardDiagram } from './components/fretboardDiagram/FretboardDiagram';
-import { Settings } from './components/settings/Settings';
+import { FretboardDiagram } from './components/playAlong/fretboardDiagram/FretboardDiagram';
+import { Settings } from './components/playAlong/settings/Settings';
 /** @jsxFrag jsx **/
 import { css } from '@emotion/react';
 import { FretboardQuiz } from './components/quiz/FretboardQuiz';

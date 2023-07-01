@@ -19,7 +19,7 @@ const initialState: QuizState = {
 };
 
 export const quizSlice = createSlice({
-  name: 'tab',
+  name: 'quiz',
   initialState,
   reducers: {
     scoreQuizGuess: (state, action: PayloadAction<string>) => {

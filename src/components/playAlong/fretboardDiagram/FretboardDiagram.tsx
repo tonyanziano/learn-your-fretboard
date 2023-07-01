@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { css } from '@emotion/react';
 import { notesPerString } from './fretboardNotes';
 import { useSelector } from 'react-redux';
-import { selectPlayAlongNote } from '../../state/selectors/currentNote';
+import { selectPlayAlongNote } from '../../../state/selectors/playAlong';
 
 const diagramContainerStyle = css({
   width: '100%',
