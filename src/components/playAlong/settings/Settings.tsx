@@ -28,7 +28,7 @@ const headerTextStyle = css({
   margin: 0,
 });
 
-const expandButton = css({
+const expandButtonStyle = css({
   marginLeft: 48,
   appearance: 'none',
   backgroundColor: '#2e2d2d',
@@ -62,7 +62,7 @@ export const Settings: React.FC = () => {
       <div css={headerStyle}>
         <h2 css={headerTextStyle}>Settings</h2>
         <button
-          css={expandButton}
+          css={expandButtonStyle}
           onClick={onExpandButtonClick}
           type={'button'}
         >
