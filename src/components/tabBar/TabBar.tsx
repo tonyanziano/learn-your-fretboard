@@ -21,8 +21,8 @@ export type TabInfo = {
 };
 
 const tabs: TabInfo[] = [
-  { key: 'play-along', text: 'Play Along' },
   { key: 'quiz', text: 'Fretboard Quiz' },
+  { key: 'play-along', text: 'Play Along' },
 ];
 
 export const TabBar: React.FC = () => {

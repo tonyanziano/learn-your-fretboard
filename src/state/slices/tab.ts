@@ -7,7 +7,7 @@ type TabState = {
 };
 
 const initialState: TabState = {
-  currentTab: 'play-along',
+  currentTab: 'quiz',
 };
 
 export const tabSlice = createSlice({
