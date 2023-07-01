@@ -1,8 +1,9 @@
 import React, { useCallback } from 'react';
 /** @jsxFrag jsx **/
 import { css } from '@emotion/react';
-import { useSelector } from 'react-redux';
-import { selectQuizNote } from '../../state/selectors/currentNote';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectQuizNote } from '../../state/selectors/quiz';
+import { scoreQuizGuess } from '../../state/slices/quiz';
 
 const noteStyle = css({
   backgroundColor: '#fff',
@@ -31,13 +32,15 @@ type NoteProps = {
 export const Note: React.FC<NoteProps> = props => {
   const { note } = props;
   const quizNote = useSelector(selectQuizNote);
+  const dispatch = useDispatch();
   const onNoteClick = useCallback(() => {
     if (note === quizNote) {
       console.log('CORRECT!');
     } else {
       console.log('INCORRECT!');
     }
-  }, [quizNote]);
+    dispatch(scoreQuizGuess(note));
+  }, [dispatch, quizNote]);
 
   return (
     <div css={noteStyle} onClick={onNoteClick}>
