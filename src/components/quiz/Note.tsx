@@ -12,7 +12,7 @@ const noteStyle = css({
   position: 'relative',
 
   ':hover': {
-    backgroundColor: '#ccc',
+    backgroundColor: '#78c8eb',
   },
 });
 
