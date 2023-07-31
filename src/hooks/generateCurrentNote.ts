@@ -9,7 +9,7 @@ import {
 import { selectIncludedNotes } from '../state/selectors/settings';
 import { setPlayAlongNote } from '../state/slices/playAlong';
 import { IncludedNotes } from '../state/slices/settings';
-import { getUniqueNote } from './getUniqueNote';
+import { getUniqueNote } from '../utils/getUniqueNote';
 
 /** Generates the current note and plays metronome audio */
 export const generateCurrentNote = () => {

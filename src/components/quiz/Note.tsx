@@ -47,7 +47,6 @@ export const Note: React.FC<NoteProps> = props => {
 
   return (
     <div css={noteStyle(number)} onClick={onNoteClick}>
-      {note}
       <div css={stringStyle}></div>
     </div>
   );

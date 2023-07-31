@@ -1,12 +1,16 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo } from 'react';
 /** @jsxFrag jsx **/
 import { css } from '@emotion/react';
 import { String } from './String';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectQuizNote, selectQuizScore } from '../../state/selectors/quiz';
-import { getUniqueNote } from '../../hooks/getUniqueNote';
+import {
+  selectQuizIsStarted,
+  selectQuizNote,
+  selectQuizScore,
+} from '../../state/selectors/quiz';
+import { getUniqueNote } from '../../utils/getUniqueNote';
 import { AccidentalNotes, NaturalNotes } from '../../constants';
-import { setQuizNote } from '../../state/slices/quiz';
+import { setQuizIsStarted, setQuizNote } from '../../state/slices/quiz';
 
 const quizContainerStyle = css({
   padding: 16,
@@ -86,16 +90,27 @@ const fretNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 export const FretboardQuiz: React.FC = () => {
   const quizNote = useSelector(selectQuizNote);
   const { correctGuesses, totalGuesses } = useSelector(selectQuizScore);
+  const quizStarted = useSelector(selectQuizIsStarted);
   const dispatch = useDispatch();
-  const [quizStarted, setQuizStarted] = useState(false);
+
   const onStartClick = useCallback(() => {
+    dispatch(setQuizIsStarted(true));
     dispatch(setQuizNote(getUniqueNote(allNotes, quizNote)));
-    setQuizStarted(started => !started);
   }, [dispatch, quizNote]);
+
   const onStopClick = useCallback(() => {
+    dispatch(setQuizIsStarted(false));
     dispatch(setQuizNote(''));
-    setQuizStarted(started => !started);
   }, [dispatch]);
+
+  const scoreText = useMemo(() => {
+    if (!quizStarted) {
+      return 'Click "Start Quiz" to begin';
+    }
+    return totalGuesses === 0
+      ? 'Score: No guesses yet'
+      : `Score: ${correctGuesses} / ${totalGuesses}`;
+  }, [correctGuesses, quizStarted, totalGuesses]);
 
   return (
     <div css={quizContainerStyle}>
@@ -111,12 +126,7 @@ export const FretboardQuiz: React.FC = () => {
       <span css={noteDisplayStyle}>
         {quizNote ? `Where can you find: ${quizNote}?` : ''}
       </span>
-      <span css={scoreStyle}>
-        Score:{' '}
-        {totalGuesses === 0
-          ? 'No guesses yet'
-          : `${correctGuesses} / ${totalGuesses}`}
-      </span>
+      <span css={scoreStyle}>{scoreText}</span>
       <div css={diagramGridStyle}>
         {fretNumbers.map(fNum => (
           <div css={fretNumberStyle} key={`fret-number-${fNum}`}>
