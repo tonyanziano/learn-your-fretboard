@@ -12,7 +12,7 @@ const quizContainerStyle = css({
   padding: 16,
 });
 
-const diagramContainerStyle = css({
+const diagramGridStyle = css({
   backgroundColor: '#fff',
   display: 'grid',
   gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr', // 12 columns; one for each fret
@@ -117,7 +117,7 @@ export const FretboardQuiz: React.FC = () => {
           ? 'No guesses yet'
           : `${correctGuesses} / ${totalGuesses}`}
       </span>
-      <div css={diagramContainerStyle}>
+      <div css={diagramGridStyle}>
         {fretNumbers.map(fNum => (
           <div css={fretNumberStyle} key={`fret-number-${fNum}`}>
             {fNum}

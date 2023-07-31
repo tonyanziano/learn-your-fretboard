@@ -5,16 +5,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectQuizNote } from '../../state/selectors/quiz';
 import { scoreQuizGuess } from '../../state/slices/quiz';
 
-const noteStyle = css({
-  backgroundColor: '#fff',
-  borderLeft: '1px solid #000',
-  cursor: 'pointer',
-  position: 'relative',
+const noteStyle = (number: number) =>
+  css({
+    backgroundColor: '#fff',
+    borderLeft: number === 0 ? '1px solid #000' : 'none',
+    borderRight: '1px solid #000',
+    cursor: 'pointer',
+    position: 'relative',
 
-  ':hover': {
-    backgroundColor: '#78c8eb',
-  },
-});
+    ':hover': {
+      backgroundColor: '#78c8eb',
+    },
+  });
 
 const stringStyle = css({
   position: 'absolute',
@@ -27,10 +29,11 @@ const stringStyle = css({
 
 type NoteProps = {
   note: string;
+  number: number;
 };
 
 export const Note: React.FC<NoteProps> = props => {
-  const { note } = props;
+  const { note, number } = props;
   const quizNote = useSelector(selectQuizNote);
   const dispatch = useDispatch();
   const onNoteClick = useCallback(() => {
@@ -43,7 +46,7 @@ export const Note: React.FC<NoteProps> = props => {
   }, [dispatch, quizNote]);
 
   return (
-    <div css={noteStyle} onClick={onNoteClick}>
+    <div css={noteStyle(number)} onClick={onNoteClick}>
       {note}
       <div css={stringStyle}></div>
     </div>
