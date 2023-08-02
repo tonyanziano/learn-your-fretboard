@@ -38,9 +38,9 @@ export const Note: React.FC<NoteProps> = props => {
   const dispatch = useDispatch();
   const onNoteClick = useCallback(() => {
     if (note === quizNote) {
-      console.log('CORRECT!');
+      console.log('Correct guess! :)');
     } else {
-      console.log('INCORRECT!');
+      console.log('Incorrect guess! :(');
     }
     dispatch(scoreQuizGuess(note));
   }, [dispatch, quizNote]);
