@@ -73,20 +73,6 @@ const scoreStyle = css({
   width: '100%',
 });
 
-// const inlayStyle = css({
-//   position: 'absolute',
-//   width: 16,
-//   height: 16,
-//   borderRadius: 16,
-//   backgroundColor: '#000',
-
-//   gridRow: 4,
-//   gridColumn: 3,
-
-//   alignSelf: 'center',
-//   justifySelf: 'center',
-// });
-
 const allNotes = [...NaturalNotes, ...AccidentalNotes];
 
 const strings = ['E', 'A', 'D', 'G', 'B', 'E'];
@@ -154,7 +140,6 @@ export const FretboardQuiz: React.FC = () => {
           return <String key={`string-${sNum}`} notes={notes} number={sNum} />;
         })}
         <div css={bottomStyle} key={'bottom-padding'}></div>
-        {/* <div css={inlayStyle}></div> */}
       </div>
     </div>
   );
