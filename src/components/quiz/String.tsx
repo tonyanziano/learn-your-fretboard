@@ -12,7 +12,12 @@ export const String: React.FC<StringProps> = props => {
   return (
     <>
       {notes.map((n, nNumber) => (
-        <Note key={`string-${number}-${n}`} note={n} number={nNumber} />
+        <Note
+          key={`string-${number}-${n}`}
+          note={n}
+          number={nNumber}
+          stringNumber={number}
+        />
       ))}
     </>
   );

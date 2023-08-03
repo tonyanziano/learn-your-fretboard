@@ -22,7 +22,9 @@ const diagramGridStyle = css({
   gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr', // 12 columns; one for each fret
   gridTemplateRows: 'auto 48px 48px 48px 48px 48px 48px 30px', // fret numbers, string 1, 2, 3, 4, 5, 6, bottom padding
   height: 'auto',
+  minWidth: 660,
   padding: '0 16px',
+  position: 'relative',
 });
 
 const bottomStyle = css({
@@ -70,6 +72,20 @@ const scoreStyle = css({
   fontSize: 22,
   width: '100%',
 });
+
+// const inlayStyle = css({
+//   position: 'absolute',
+//   width: 16,
+//   height: 16,
+//   borderRadius: 16,
+//   backgroundColor: '#000',
+
+//   gridRow: 4,
+//   gridColumn: 3,
+
+//   alignSelf: 'center',
+//   justifySelf: 'center',
+// });
 
 const allNotes = [...NaturalNotes, ...AccidentalNotes];
 
@@ -138,6 +154,7 @@ export const FretboardQuiz: React.FC = () => {
           return <String key={`string-${sNum}`} notes={notes} number={sNum} />;
         })}
         <div css={bottomStyle} key={'bottom-padding'}></div>
+        {/* <div css={inlayStyle}></div> */}
       </div>
     </div>
   );
