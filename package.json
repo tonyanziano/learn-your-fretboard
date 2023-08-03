@@ -1,6 +1,6 @@
 {
   "name": "learn-your-fretboard",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A tool built to help learn your guitar's fretboard.",
   "main": "dist/index.js",
   "scripts": {
